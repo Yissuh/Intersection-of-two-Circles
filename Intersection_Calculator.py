@@ -37,8 +37,39 @@ def handle_button_click():
         x2_scaled, y2_scaled, r2_scaled = calculate_scaled_values(canvas_width, canvas_height, x2, y2, r2, scale)
 
         draw_circles(canvas, x1_scaled, y1_scaled, r1_scaled, x2_scaled, y2_scaled, r2_scaled)
+        if d == 0 and r1 == r2:
+            inside_circle_color = "green"
+            canvas.create_oval(x1_scaled - r1_scaled, y1_scaled - r1_scaled, x1_scaled + r1_scaled,
+                               y1_scaled + r1_scaled,
+                               outline=inside_circle_color, width=2)
+            canvas.create_oval(x2_scaled - r2_scaled, y2_scaled - r2_scaled, x2_scaled + r2_scaled,
+                               y2_scaled + r2_scaled,
+                               outline=inside_circle_color, width=2)
+            intersection_label.config(
+                text="No intersection points. The circles overlap each other.", bg="red")
+        elif d == abs (r1-r2):
+            # Circles touch internally
+            a = (r1 ** 2 - r2 ** 2 + d ** 2) / (2 * d)
+            h = math.sqrt(r1 ** 2 - a ** 2)
+            x4, y4, x5, y5 = calculate_intersection(x1, x2, y1, y2, a, h, d)
+            intersection_points = [(x4, y4), (x5,y5)]
+            draw_intersection_points(canvas, intersection_points, scale)
+            if intersection_points[0] == intersection_points[1]:
+                intersection_points = intersection_points[0]
+            intersection_label.config(text=f"Intersection Points: {intersection_points}", bg="yellow")
 
-        if d < abs(r1 - r2):
+        elif d == r1 + r2:
+                # Circles touch externally
+            a = (r1 ** 2 - r2 ** 2 + d ** 2) / (2 * d)
+            h = math.sqrt(r1 ** 2 - a ** 2)
+            x4, y4, x5, y5 = calculate_intersection(x1, x2, y1, y2, a, h, d)
+            intersection_points = [(x4, y4), (x5, y5)]
+            draw_intersection_points(canvas, intersection_points, scale)
+            if intersection_points[0] == intersection_points[1]:
+                intersection_points = intersection_points[0]
+            intersection_label.config(text=f"Intersection Points: {intersection_points}", bg="yellow")
+        
+        elif d < abs(r1 - r2):
             inside_circle_color = "green"
             if r1 > r2:
                 canvas.create_oval(x2_scaled - r2_scaled, y2_scaled - r2_scaled, x2_scaled + r2_scaled,
@@ -52,16 +83,6 @@ def handle_button_click():
                 text="No intersection points. One of the circles is inside the other.", bg="red")
         elif d > r1 + r2:
             intersection_label.config(text="No Intersection. Separate Circles.", bg="red")
-        elif d == 0 and r1 == r2:
-            inside_circle_color = "green"
-            canvas.create_oval(x1_scaled - r1_scaled, y1_scaled - r1_scaled, x1_scaled + r1_scaled,
-                               y1_scaled + r1_scaled,
-                               outline=inside_circle_color, width=2)
-            canvas.create_oval(x2_scaled - r2_scaled, y2_scaled - r2_scaled, x2_scaled + r2_scaled,
-                               y2_scaled + r2_scaled,
-                               outline=inside_circle_color, width=2)
-            intersection_label.config(
-                text="No intersection points. The circles overlap each other.", bg="red")
         else:
             a = (r1 ** 2 - r2 ** 2 + d ** 2) / (2 * d)
             h = math.sqrt(r1 ** 2 - a ** 2)
