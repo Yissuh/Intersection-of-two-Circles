@@ -11,10 +11,12 @@ This is a circle intersection calculator implemented as an algorithm project for
 
 ## Features
 
-- Calculates the intersection points of two circles.
-- Handles various cases, including circles inside each other, separate circles, and overlapping circles.
-- Displays clear error messages for invalid inputs.
-- Provides a button to clear the input fields and reset the canvas.
+1.	Intersection Point Calculation: It calculates the intersection points between two circles based on their coordinates and radii.
+2.	Handling Various Cases: It handles different scenarios such as circles inside each other, separate circles, and overlapping circles, providing accurate results for each case.
+3.	Draw Circles and Points: It draws a scaled version of the circles and their intersection points on the canvas based on an imaginary Cartesian Coordinate Plane to accurately position the circles and the intersection points. 
+4.	Error Handling: It displays clear error messages in case of invalid inputs, such as negative radius values.
+5.	Reset Functionality: It provides a "Clear" button that clears the input fields and resets the canvas, allowing users to start fresh calculations.
+
 
 ## Dependencies
 
